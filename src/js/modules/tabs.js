@@ -1,12 +1,13 @@
-const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
+const tabs = (headerSelector, tabSelector, contentSelector, activeClass, display = "block") => {
     const header = document.querySelector(headerSelector),
         tab = document.querySelectorAll(tabSelector),
         content = document.querySelectorAll(contentSelector);
 
     function hideTabContent() {
         content.forEach((item) => {
+            item.display = "none";
             item.classList.add("hide");
-            item.classList.remove("show", "fade");
+            item.classList.remove("show", "fade", "centering");
         });
 
         tab.forEach((item) => {
@@ -15,7 +16,8 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
     }
 
     function showTabContent(i = 0) {
-        content[i].classList.add("show", "fade");
+        content[i].style.display = display;
+        content[i].classList.add("show", "fade", "centering");
         content[i].classList.remove("hide");
         tab[i].classList.add(activeClass);
     }

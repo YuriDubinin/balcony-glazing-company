@@ -4,6 +4,9 @@
 .show {
     display: block;
 }
+.centering {
+    margin: 0 auto;
+}
 .fade {
     animation: fade 0.5s ease 0s forwards;
 }
