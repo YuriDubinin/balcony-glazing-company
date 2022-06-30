@@ -18097,7 +18097,8 @@ var modals = function modals() {
     var trigger = document.querySelectorAll(triggerSelector),
         modal = document.querySelector(modalSelector),
         close = document.querySelector(closeSelector),
-        windows = document.querySelectorAll("[data-modal]");
+        windows = document.querySelectorAll("[data-modal]"),
+        scroll = calcScroll();
     trigger.forEach(function (item) {
       item.addEventListener("click", function (event) {
         if (event.target) {
@@ -18109,6 +18110,7 @@ var modals = function modals() {
         });
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
+        document.body.style.marginRight = "".concat(scroll, "px");
       });
     });
     close.addEventListener("click", function () {
@@ -18117,6 +18119,7 @@ var modals = function modals() {
       });
       modal.style.display = "none";
       document.body.style.overflow = "";
+      document.body.style.marginRight = "0px";
     });
     modal.addEventListener("click", function (event) {
       if (event.target === modal && closeClickOverlay) {
@@ -18125,6 +18128,7 @@ var modals = function modals() {
         });
         modal.style.display = "none";
         document.body.style.overflow = "";
+        document.body.style.marginRight = "0px";
       }
     });
   }
@@ -18134,6 +18138,19 @@ var modals = function modals() {
       document.querySelector(modalSelector).style.display = "block";
       document.body.style.overflow = "hidden";
     }, modalTimer);
+  } // Technical function automatically calculates the thickness of the scroll
+
+
+  function calcScroll() {
+    var div = document.createElement("div");
+    div.style.width = "50px";
+    div.style.height = "50px";
+    div.style.overflowY = "scroll";
+    div.style.visibility = "hidden";
+    document.body.appendChild(div);
+    var scrollWidth = div.offsetWidth - div.clientWidth;
+    div.remove();
+    return scrollWidth;
   }
 
   bindModal(".popup_engineer_btn", ".popup_engineer", ".popup_engineer .popup_close");
@@ -18173,7 +18190,7 @@ var tabs = function tabs(headerSelector, tabSelector, contentSelector, activeCla
     content.forEach(function (item) {
       item.display = "none";
       item.classList.add("hide");
-      item.classList.remove("show", "fade", "centering");
+      item.classList.remove("show", "faded", "centering");
     });
     tab.forEach(function (item) {
       item.classList.remove(activeClass);
@@ -18183,7 +18200,7 @@ var tabs = function tabs(headerSelector, tabSelector, contentSelector, activeCla
   function showTabContent() {
     var i = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
     content[i].style.display = display;
-    content[i].classList.add("show", "fade", "centering");
+    content[i].classList.add("show", "faded", "centering");
     content[i].classList.remove("hide");
     tab[i].classList.add(activeClass);
   }

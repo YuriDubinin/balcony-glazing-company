@@ -7,7 +7,7 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass, display
         content.forEach((item) => {
             item.display = "none";
             item.classList.add("hide");
-            item.classList.remove("show", "fade", "centering");
+            item.classList.remove("show", "faded", "centering");
         });
 
         tab.forEach((item) => {
@@ -17,7 +17,7 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass, display
 
     function showTabContent(i = 0) {
         content[i].style.display = display;
-        content[i].classList.add("show", "fade", "centering");
+        content[i].classList.add("show", "faded", "centering");
         content[i].classList.remove("hide");
         tab[i].classList.add(activeClass);
     }

@@ -7,11 +7,11 @@
 .centering {
     margin: 0 auto;
 }
-.fade {
-    animation: fade 0.5s ease 0s forwards;
+.faded {
+    animation: faded 0.5s ease 0s forwards;
 }
 
-@keyframes fade {
+@keyframes faded {
     0% {
         opacity: 0;
     }
