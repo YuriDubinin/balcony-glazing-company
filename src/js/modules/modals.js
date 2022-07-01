@@ -1,10 +1,12 @@
+import calcScrollWidth from "./calcScrollWidth";
+
 const modals = () => {
     function bindModal(triggerSelector, modalSelector, closeSelector, closeClickOverlay = true) {
         const trigger = document.querySelectorAll(triggerSelector),
             modal = document.querySelector(modalSelector),
             close = document.querySelector(closeSelector),
             windows = document.querySelectorAll("[data-modal]"),
-            scroll = calcScroll();
+            scrollWidth = calcScrollWidth();
 
         trigger.forEach((item) => {
             item.addEventListener("click", (event) => {
@@ -18,7 +20,7 @@ const modals = () => {
 
                 modal.style.display = "block";
                 document.body.style.overflow = "hidden";
-                document.body.style.marginRight = `${scroll}px`;
+                document.body.style.marginRight = `${scrollWidth}px`;
             });
         });
 
@@ -45,27 +47,13 @@ const modals = () => {
         });
     }
 
-    function showModalByTime(modalSelector, modalTimer) {
+    function showModalByTime(modalSelector, time) {
+        const scrollWidth = calcScrollWidth();
         setTimeout(() => {
             document.querySelector(modalSelector).style.display = "block";
             document.body.style.overflow = "hidden";
-        }, modalTimer);
-    }
-
-    // Technical function automatically calculates the thickness of the scroll
-    function calcScroll() {
-        let div = document.createElement("div");
-
-        div.style.width = "50px";
-        div.style.height = "50px";
-        div.style.overflowY = "scroll";
-        div.style.visibility = "hidden";
-
-        document.body.appendChild(div);
-        let scrollWidth = div.offsetWidth - div.clientWidth;
-        div.remove();
-
-        return scrollWidth;
+            document.body.style.marginRight = `${scrollWidth}px`;
+        }, time);
     }
 
     bindModal(".popup_engineer_btn", ".popup_engineer", ".popup_engineer .popup_close");
@@ -74,7 +62,7 @@ const modals = () => {
     bindModal(".popup_calc_button", ".popup_calc_profile", ".popup_calc_profile_close", false);
     bindModal(".popup_calc_profile_button", ".popup_calc_end", ".popup_calc_end_close", false);
 
-    // showModalByTime(".popup", 60000);
+    showModalByTime(".popup_engineer", 60000);
 };
 
 export default modals;

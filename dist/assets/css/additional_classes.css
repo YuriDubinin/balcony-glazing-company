@@ -1,21 +1,55 @@
+/* The file contains a set of custom classes for working with some blocks, images and animations */
+
 .hide {
     display: none;
 }
+
 .show {
     display: block;
 }
+
 .centering {
     margin: 0 auto;
 }
-.faded {
-    animation: faded 0.5s ease 0s forwards;
+
+.image-popup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 100vh;
 }
 
-@keyframes faded {
+.image-popup img {
+    max-width: 100%;
+    max-height: 90%;
+    object-fit: cover;
+    animation: shape-enlargement 0.5s ease forwards;
+}
+
+.vaguely-appearing {
+    animation: appearance 0.5s ease 0s forwards;
+}
+
+.emerging-from-small {
+    animation: shape-enlargement 0.5s ease 0s forwards;
+}
+
+/* animations */
+
+@keyframes appearance {
     0% {
         opacity: 0;
     }
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes shape-enlargement {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
     }
 }

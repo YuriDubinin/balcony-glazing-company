@@ -17834,6 +17834,32 @@ window.addEventListener("DOMContentLoaded", function () {
 
 /***/ }),
 
+/***/ "./src/js/modules/calcScrollWidth.js":
+/*!*******************************************!*\
+  !*** ./src/js/modules/calcScrollWidth.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// Technical function automatically calculates the width of the scroll
+var calcScrollWidth = function calcScrollWidth() {
+  var div = document.createElement("div");
+  div.style.width = "50px";
+  div.style.height = "50px";
+  div.style.overflowY = "scroll";
+  div.style.visibility = "hidden";
+  document.body.appendChild(div);
+  var scrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return scrollWidth;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (calcScrollWidth);
+
+/***/ }),
+
 /***/ "./src/js/modules/changeModalState.js":
 /*!********************************************!*\
   !*** ./src/js/modules/changeModalState.js ***!
@@ -18048,14 +18074,17 @@ var forms = function forms(state) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _calcScrollWidth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./calcScrollWidth */ "./src/js/modules/calcScrollWidth.js");
+
+
 var images = function images() {
   var imgPopup = document.createElement("div"),
       workSection = document.querySelector(".works"),
-      bigImage = document.createElement("img");
+      bigImage = document.createElement("img"),
+      scrollWidth = Object(_calcScrollWidth__WEBPACK_IMPORTED_MODULE_0__["default"])();
   imgPopup.classList.add("popup");
+  imgPopup.classList.add("image-popup");
   workSection.appendChild(imgPopup);
-  imgPopup.style.justifyContent = "center";
-  imgPopup.style.alignItems = "center";
   imgPopup.style.display = "none";
   imgPopup.appendChild(bigImage);
   workSection.addEventListener("click", function (event) {
@@ -18063,13 +18092,17 @@ var images = function images() {
     var target = event.target;
 
     if (target && target.classList.contains("preview")) {
+      document.body.style.marginRight = "".concat(scrollWidth, "px");
       imgPopup.style.display = "flex";
+      document.body.style.overflow = "hidden";
       var path = target.parentNode.getAttribute("href");
       bigImage.setAttribute("src", path);
     }
 
     if (target && target.matches("div.popup")) {
       imgPopup.style.display = "none";
+      document.body.style.overflow = "";
+      document.body.style.marginRight = "0px";
     }
   });
 };
@@ -18089,6 +18122,8 @@ var images = function images() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _calcScrollWidth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./calcScrollWidth */ "./src/js/modules/calcScrollWidth.js");
+
 
 
 var modals = function modals() {
@@ -18098,7 +18133,7 @@ var modals = function modals() {
         modal = document.querySelector(modalSelector),
         close = document.querySelector(closeSelector),
         windows = document.querySelectorAll("[data-modal]"),
-        scroll = calcScroll();
+        scrollWidth = Object(_calcScrollWidth__WEBPACK_IMPORTED_MODULE_1__["default"])();
     trigger.forEach(function (item) {
       item.addEventListener("click", function (event) {
         if (event.target) {
@@ -18110,7 +18145,7 @@ var modals = function modals() {
         });
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
-        document.body.style.marginRight = "".concat(scroll, "px");
+        document.body.style.marginRight = "".concat(scrollWidth, "px");
       });
     });
     close.addEventListener("click", function () {
@@ -18133,31 +18168,21 @@ var modals = function modals() {
     });
   }
 
-  function showModalByTime(modalSelector, modalTimer) {
+  function showModalByTime(modalSelector, time) {
+    var scrollWidth = Object(_calcScrollWidth__WEBPACK_IMPORTED_MODULE_1__["default"])();
     setTimeout(function () {
       document.querySelector(modalSelector).style.display = "block";
       document.body.style.overflow = "hidden";
-    }, modalTimer);
-  } // Technical function automatically calculates the thickness of the scroll
-
-
-  function calcScroll() {
-    var div = document.createElement("div");
-    div.style.width = "50px";
-    div.style.height = "50px";
-    div.style.overflowY = "scroll";
-    div.style.visibility = "hidden";
-    document.body.appendChild(div);
-    var scrollWidth = div.offsetWidth - div.clientWidth;
-    div.remove();
-    return scrollWidth;
+      document.body.style.marginRight = "".concat(scrollWidth, "px");
+    }, time);
   }
 
   bindModal(".popup_engineer_btn", ".popup_engineer", ".popup_engineer .popup_close");
   bindModal(".phone_link", ".popup", ".popup .popup_close");
   bindModal(".popup_calc_btn", ".popup_calc", ".popup_calc_close", "inline-block");
   bindModal(".popup_calc_button", ".popup_calc_profile", ".popup_calc_profile_close", false);
-  bindModal(".popup_calc_profile_button", ".popup_calc_end", ".popup_calc_end_close", false); // showModalByTime(".popup", 60000);
+  bindModal(".popup_calc_profile_button", ".popup_calc_end", ".popup_calc_end_close", false);
+  showModalByTime(".popup_engineer", 60000);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modals);
@@ -18190,7 +18215,7 @@ var tabs = function tabs(headerSelector, tabSelector, contentSelector, activeCla
     content.forEach(function (item) {
       item.display = "none";
       item.classList.add("hide");
-      item.classList.remove("show", "faded", "centering");
+      item.classList.remove("show", "vaguely-appearing", "centering");
     });
     tab.forEach(function (item) {
       item.classList.remove(activeClass);
@@ -18200,7 +18225,7 @@ var tabs = function tabs(headerSelector, tabSelector, contentSelector, activeCla
   function showTabContent() {
     var i = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
     content[i].style.display = display;
-    content[i].classList.add("show", "faded", "centering");
+    content[i].classList.add("show", "vaguely-appearing", "centering");
     content[i].classList.remove("hide");
     tab[i].classList.add(activeClass);
   }
