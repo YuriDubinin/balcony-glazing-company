@@ -2,7 +2,7 @@
 
 🏠 A sample landing page for companies providing glazing services for loggias and balconies.
 
-![preview](src/assets/img/for_readme/preview.jpg.jpg)
+![preview](src/assets/img/for_readme/preview.jpg)
 
 ## Features/highlights
 
@@ -13,7 +13,7 @@
 ## Setup
 
 ```bash
-$ git clone https://github.com/YuriDubinin/balcony-glazing-company
+$ git clone https://github.com/YuriDubinin/balcony-glazing-company.git
 $ cd balcony-glazing-company
 $ npm i
 $ npx gulp
