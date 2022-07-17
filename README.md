@@ -13,7 +13,7 @@
 ## Setup
 
 ```bash
-$ git clone https://github.com/YuriDubinin/balcony-glazing-company.git
+$ git clone https://github.com/YuriyDubinin/balcony-glazing-company.git
 $ cd balcony-glazing-company
 $ npm i
 $ npx gulp
